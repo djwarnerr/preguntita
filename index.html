@@ -101,58 +101,62 @@
 </div>
 
 <script>
-  const noBtn = document.getElementById("no");
-  const yesBtn = document.getElementById("yes");
-  const memeDiv = document.getElementById("meme");
-  const question = document.getElementById("question");
-  const celebration = document.getElementById("celebration");
+ const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const memeDiv = document.getElementById("meme");
+const question = document.getElementById("question");
+const celebration = document.getElementById("celebration");
+const counter = document.getElementById("counter");
+const music = document.getElementById("music");
 
-  let noClicks = 0;
+let noClicks = 0;
 
-  const memes = [
-    "https://i.imgflip.com/4/4t0m5.jpg", // think about it
-    "https://i.imgflip.com/4/1bij.jpg"   // are you sure?
-  ];
+const memes = [
+  "images/meme1.jpg",
+  "images/meme2.jpg"
+];
 
-  noBtn.addEventListener("click", () => {
-    noClicks++;
+noBtn.addEventListener("click", () => {
+  noClicks++;
+  counter.textContent = `You tried to say no ${noClicks} time(s) 😏`;
 
-    if (noClicks <= memes.length) {
-      memeDiv.innerHTML = `<img src="${memes[noClicks - 1]}" alt="meme">`;
-    }
+  if (noClicks <= memes.length) {
+    memeDiv.innerHTML = `<img src="${memes[noClicks - 1]}" alt="meme">`;
+  }
+});
+
+noBtn.addEventListener("mouseover", () => {
+  if (noClicks > memes.length) {
+    const x = Math.random() * 300 - 150;
+    const y = Math.random() * 300 - 150;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  }
+});
+
+yesBtn.addEventListener("click", () => {
+  question.classList.add("hidden");
+  celebration.classList.remove("hidden");
+
+  music.play();
+
+  confetti({
+    particleCount: 250,
+    spread: 120,
+    origin: { y: 0.6 }
   });
 
-  noBtn.addEventListener("mouseover", () => {
-    if (noClicks >= memes.length + 1) {
-      const x = Math.random() * 300 - 150;
-      const y = Math.random() * 300 - 150;
-      noBtn.style.transform = `translate(${x}px, ${y}px)`;
-    }
-  });
+  for (let i = 0; i < 18; i++) {
+    const butterfly = document.createElement("div");
+    butterfly.className = "butterfly";
+    butterfly.textContent = "🦋";
+    butterfly.style.left = Math.random() * 100 + "vw";
+    butterfly.style.animationDuration = 4 + Math.random() * 4 + "s";
+    document.body.appendChild(butterfly);
 
-  yesBtn.addEventListener("click", () => {
-    question.classList.add("hidden");
-    celebration.classList.remove("hidden");
+    setTimeout(() => butterfly.remove(), 8000);
+  }
+});
 
-    // Confetti burst
-    confetti({
-      particleCount: 200,
-      spread: 100,
-      origin: { y: 0.6 }
-    });
-
-    // Butterflies
-    for (let i = 0; i < 15; i++) {
-      const butterfly = document.createElement("div");
-      butterfly.className = "butterfly";
-      butterfly.textContent = "🦋";
-      butterfly.style.left = Math.random() * 100 + "vw";
-      butterfly.style.animationDuration = 4 + Math.random() * 4 + "s";
-      document.body.appendChild(butterfly);
-
-      setTimeout(() => butterfly.remove(), 8000);
-    }
-  });
 </script>
 
 </body>
