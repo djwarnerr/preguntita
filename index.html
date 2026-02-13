@@ -126,10 +126,10 @@ noBtn.addEventListener("click", () => {
   noClicks++;
   counter.textContent = `Firme?, ya van ${noClicks} "No" uu`;
 
-  if (noClicks <= memes.length) {
-    memeDiv.innerHTML = `<img src="${memes[noClicks - 1]}" alt="meme">`;
-  }
+  const memeIndex = (noClicks - 1) % memes.length;
+  memeDiv.innerHTML = `<img src="${memes[memeIndex]}" alt="meme">`;
 });
+
 
 noBtn.addEventListener("mouseover", () => {
   if (noClicks > memes.length) {
